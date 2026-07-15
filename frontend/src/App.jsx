@@ -9,6 +9,8 @@ import ProfilePage from './pages/ProfilePage.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import { formatPrice, RATES } from './utils/formatPrice.js';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 // Toast 
 function Toast({ message, show }) {
   return (
@@ -60,7 +62,7 @@ function QuickView({ product, onClose, onAddToCart, currency, onToggleWishlist, 
   React.useEffect(() => {
     if (!product) return;
     setReviewsLoading(true);
-    fetch(`http://localhost:5000/api/products/${product.id}/reviews`)
+    fetch(`${API}/api/products/${product.id}/reviews`)
       .then(r => r.json())
       .then(d => setReviews(d.reviews || []))
       .catch(() => setReviews([]))
@@ -205,7 +207,7 @@ function CartDrawer({ isOpen, onClose, cart, onUpdateQty, onRemove, onCheckout, 
     setVoucherLoading(true); setVoucherError('');
     try {
       const grossAmount = Math.round(total * RATES.IDR);
-      const res = await fetch('http://localhost:5000/api/vouchers/validate', {
+      const res = await fetch(`${API}/api/vouchers/validate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` },
         body: JSON.stringify({ code: voucherCode.trim(), order_amount: grossAmount })
@@ -486,7 +488,7 @@ export default function App() {
       }));
 
       const token = getToken();
-      const res   = await fetch('http://localhost:5000/api/create-transaction', {
+      const res   = await fetch(`${API}/api/create-transaction`, {
         method: 'POST',
         headers: {
           'Content-Type':  'application/json',
@@ -624,7 +626,7 @@ export default function App() {
                 </div>
                 <div style={{width:'32px',height:'32px',borderRadius:'50%',background:'#1a1a1a',color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:'0.85rem',flexShrink:0, overflow: 'hidden'}}>
                   {user.avatar ? (
-                    <img src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`} alt="Avatar" referrerPolicy="no-referrer" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                    <img src={user.avatar.startsWith('http') ? user.avatar : `${API}${user.avatar}`} alt="Avatar" referrerPolicy="no-referrer" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
                   ) : (
                     user.name.charAt(0).toUpperCase()
                   )}

@@ -747,7 +747,7 @@ function VouchersTab({ getToken, showToast }) {
   const [copied, setCopied] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/vouchers/available', {
+    fetch(`${API}/api/vouchers/available`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
       .then(r => r.json())
@@ -786,7 +786,7 @@ function VouchersTab({ getToken, showToast }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
         <h3 style={sectionTitle}>My Vouchers</h3>
         <button
-          onClick={() => { setLoading(true); fetch('http://localhost:5000/api/vouchers/available', { headers: { Authorization: `Bearer ${getToken()}` } }).then(r => r.json()).then(d => setVouchers(d.vouchers || [])).finally(() => setLoading(false)); }}
+          onClick={() => { setLoading(true); fetch(`${API}/api/vouchers/available`, { headers: { Authorization: `Bearer ${getToken()}` } }).then(r => r.json()).then(d => setVouchers(d.vouchers || [])).finally(() => setLoading(false)); }}
           style={{ background: 'none', border: '1px solid #eee', borderRadius: '8px', padding: '8px 14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#888', fontFamily: 'Jost' }}
         >
           <RefreshCw size={14} /> Refresh

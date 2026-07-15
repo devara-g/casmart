@@ -5,10 +5,8 @@
 --   2. Klik "Import" → pilih file ini → klik "Go"
 -- ============================================================
 
-  USE railway;
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
+CREATE DATABASE IF NOT EXISTS `casmart_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `casmart_db`;
 
 
 -- ─── Users ──────────────────────────────────────────────────

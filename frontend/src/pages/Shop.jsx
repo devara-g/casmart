@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Search, X, Eye, Heart, ShoppingBag, Check } from 'lucide-react';
 import { formatPrice } from '../utils/formatPrice';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 function ProductCard({ product, onAddToCart, onQuickView, wishlist, onToggleWishlist, currency }) {
   const [added, setAdded] = useState(false);
   const isWished = wishlist.includes(product.id);
@@ -96,7 +98,7 @@ export default function Shop({
   const [visibleCount, setVisibleCount] = useState(8);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products')
+    axios.get(`${API}/api/products`)
       .then(res => setProducts(res.data.products))
       .catch(err => {
         console.error(err);
@@ -296,7 +298,7 @@ export default function Shop({
               const email = emailInput.value.trim();
               if (!email) return;
               try {
-                const res = await fetch('http://localhost:5000/api/newsletter/subscribe', {
+                const res = await fetch(`${API}/api/newsletter/subscribe`, {
                   method: 'POST',
                   headers: {'Content-Type':'application/json'},
                   body: JSON.stringify({ email })
