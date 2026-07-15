@@ -68,6 +68,21 @@ export function AuthProvider({ children }) {
     return data.user;
   }, []);
 
+  // Google Login 
+  const googleLogin = useCallback(async (credential) => {
+    const res  = await fetch(`${API}/api/auth/google`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ credential }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Google login failed');
+    localStorage.setItem('casmart_token', data.token);
+    setUser(data.user);
+    fetchWishlistIds(data.token);
+    return data.user;
+  }, []);
+
   // Logout 
   const logout = useCallback(() => {
     localStorage.removeItem('casmart_token');
@@ -103,7 +118,7 @@ export function AuthProvider({ children }) {
   }, [getToken]);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout, getToken, updateUser, wishlistIds, toggleWishlist }}>
+    <AuthContext.Provider value={{ user, isLoading, login, register, googleLogin, logout, getToken, updateUser, wishlistIds, toggleWishlist }}>
       {children}
     </AuthContext.Provider>
   );

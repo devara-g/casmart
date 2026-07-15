@@ -624,7 +624,7 @@ export default function App() {
                 </div>
                 <div style={{width:'32px',height:'32px',borderRadius:'50%',background:'#1a1a1a',color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:'0.85rem',flexShrink:0, overflow: 'hidden'}}>
                   {user.avatar ? (
-                    <img src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`} alt="Avatar" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                    <img src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`} alt="Avatar" referrerPolicy="no-referrer" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
                   ) : (
                     user.name.charAt(0).toUpperCase()
                   )}

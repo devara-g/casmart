@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { GoogleLogin } from '@react-oauth/google';
 
 // Reusable Input 
 function Input({ label, type = 'text', value, onChange, placeholder, autoComplete }) {
@@ -30,7 +31,7 @@ function Input({ label, type = 'text', value, onChange, placeholder, autoComplet
 
 // Auth Modal 
 export default function AuthModal({ isOpen, onClose, onSuccess }) {
-  const { login, register } = useAuth();
+  const { login, register, googleLogin } = useAuth();
 
   const [mode,     setMode]     = useState('login');   // 'login' | 'register'
   const [name,     setName]     = useState('');
@@ -42,6 +43,21 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
   const reset = () => { setName(''); setEmail(''); setPassword(''); setError(''); setLoading(false); };
 
   const switchMode = (m) => { setMode(m); reset(); };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setError('');
+    setLoading(true);
+    try {
+      await googleLogin(credentialResponse.credential);
+      reset();
+      onSuccess?.();
+      onClose();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -162,6 +178,23 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
               }
             </button>
           </form>
+
+          <div style={{ margin: '24px 0', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ flex: 1, height: '1px', background: '#e0e0e0' }} />
+            <span style={{ fontSize: '0.8rem', color: '#888', fontWeight: 600 }}>OR</span>
+            <div style={{ flex: 1, height: '1px', background: '#e0e0e0' }} />
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => setError('Google Login Failed')}
+              shape="rectangular"
+              size="large"
+              text={mode === 'login' ? 'signin_with' : 'signup_with'}
+              width="100%"
+            />
+          </div>
 
         </div>
       </div>

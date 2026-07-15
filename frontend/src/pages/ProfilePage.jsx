@@ -27,7 +27,7 @@ function Avatar({ name, color, size = 80, avatarUrl }) {
       boxShadow: '0 4px 10px rgba(0,0,0,0.1)', userSelect: 'none', border: '3px solid #fff',
       overflow: 'hidden'
     }}>
-      {imgUrl ? <img src={imgUrl} alt="avatar" style={{width: '100%', height: '100%', objectFit: 'cover'}} /> : initials}
+      {imgUrl ? <img src={imgUrl} alt="avatar" referrerPolicy="no-referrer" style={{width: '100%', height: '100%', objectFit: 'cover'}} /> : initials}
     </div>
   );
 }
