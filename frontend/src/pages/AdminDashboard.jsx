@@ -1469,7 +1469,7 @@ export default function AdminDashboard({ currency, showToast }) {
                       </td>
                       <td style={{ padding: '14px 16px', fontSize: '0.85rem', color: '#666' }}>{new Date(order.created_at).toLocaleDateString()}</td>
                       <td style={{ padding: '14px 16px', fontSize: '0.85rem', color: '#555', maxWidth: '200px' }}>{order.items_summary || '-'}</td>
-                      <td style={{ padding: '14px 16px', fontSize: '0.9rem', fontWeight: 700, color: '#1a1a1a' }}>{formatPrice(order.gross_amount_idr, 'IDR')}</td>
+                      <td style={{ padding: '14px 16px', fontSize: '0.9rem', fontWeight: 700, color: '#1a1a1a' }}>Rp {Number(order.gross_amount_idr).toLocaleString('id-ID')}</td>
                       <td style={{ padding: '14px 16px' }}>
                         <select 
                           value={order.status}
