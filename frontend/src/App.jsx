@@ -676,7 +676,20 @@ export default function App() {
             </div>
             <ul className="navbar-list">
               <li><Link to="/" className="navbar-link">Home</Link></li>
-              <li><Link to="/" className="navbar-link">Shop</Link></li>
+              <li>
+                <a 
+                  href="/#products" 
+                  className="navbar-link" 
+                  onClick={(e) => {
+                    if (window.location.pathname === '/') {
+                      e.preventDefault();
+                      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  Shop
+                </a>
+              </li>
               {user && <li><Link to="/profile" className="navbar-link">Profile</Link></li>}
               {user && user.role === 'admin' && <li><Link to="/admin" className="navbar-link" style={{color:'#e53935'}}>Admin Dashboard</Link></li>}
             </ul>
